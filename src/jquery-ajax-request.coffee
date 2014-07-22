@@ -132,7 +132,7 @@ module.exports = (options)->
 
     _useCacheIfPossible:(callback)=>
       if @options.useCache is true
-        retrieveCache @_generateCacheKey(), callback
+        return retrieveCache @_generateCacheKey(), callback
       return callback(null)
 
     _generateCacheKey:()=>

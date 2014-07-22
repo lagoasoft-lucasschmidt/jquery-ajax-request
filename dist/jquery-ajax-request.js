@@ -232,7 +232,7 @@ module.exports = function(options) {
 
     Request.prototype._useCacheIfPossible = function(callback) {
       if (this.options.useCache === true) {
-        retrieveCache(this._generateCacheKey(), callback);
+        return retrieveCache(this._generateCacheKey(), callback);
       }
       return callback(null);
     };
