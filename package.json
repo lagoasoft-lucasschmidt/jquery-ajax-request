@@ -1,0 +1,44 @@
+{
+  "name": "jquery-ajax-request",
+  "version": "0.0.1",
+  "description": "Module that allows you to perform ajax requests in the browser. A wrapper around $.ajax, inspired by superagent.",
+  "main": "lib/jquery-ajax-request.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/lucastschmidt/jquery-ajax-request"
+  },
+  "keywords": [
+    "ajax",
+    "request",
+    "browser"
+  ],
+  "author": "Lucas Schmidt",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/lucastschmidt/jquery-ajax-request/issues"
+  },
+  "homepage": "https://github.com/lucastschmidt/jquery-ajax-request",
+  "devDependencies": {
+    "browserify": "^4.2.3",
+    "browserify-shim": "^3.6.0",
+    "grunt": "^0.4.5",
+    "grunt-browserify": "^2.1.3",
+    "grunt-contrib-clean": "^0.5.0",
+    "grunt-contrib-coffee": "^0.10.1",
+    "grunt-contrib-uglify": "^0.5.0",
+    "underscore.string": "^2.3.3"
+  },
+  "dependencies": {
+    "jquery": "^2.1.1",
+    "json-stable-stringify": "^1.0.0",
+    "uri-js": "^1.4.2",
+    "lodash": "^2.4.1"
+  },
+  "browserify-shim": {
+    "jquery": "global:$",
+    "lodash": "global: _"
+  }
+}
