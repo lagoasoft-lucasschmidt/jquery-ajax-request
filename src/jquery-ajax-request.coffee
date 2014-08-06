@@ -14,7 +14,7 @@ module.exports = (options)->
 
   class Request
     constructor:(@method, @url)->
-      throw new Error("Method must be GET/POST") if not(@method in ["GET", "POST"])
+      throw new Error("Method must be supported") if not(@method in ["GET", "POST", "DELETE", "PUT"])
       throw new Error("Url must be informed") if not(_.isString(@url))
       @_query = {}
       @options = {acceptsJSON: true, background: false}
