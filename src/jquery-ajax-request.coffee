@@ -1,6 +1,6 @@
 $ = require 'jquery'
 _ = require 'lodash'
-URI = require 'uri-js'
+URI = require 'URIjs'
 stableStringify = require 'json-stable-stringify'
 
 module.exports = (options)->

@@ -10,7 +10,7 @@ Bundled with **browserify**
 - lodash (or underscore)
 
 # Included Dependencies
-- uri-js
+- URIjs
 - json-stable-stringify
 
 # Browser

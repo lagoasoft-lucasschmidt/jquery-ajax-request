@@ -28,7 +28,7 @@ module.exports = (grunt) ->
           'dist/<%= config.filename %>.js':['lib/<%= config.filename %>.js']
         options:
           transform: ['browserify-shim']
-          bundleOptions:
+          browserifyOptions:
             standalone:_s.camelize(pkg.name)
     uglify:
       dist:
