@@ -1,6 +1,6 @@
 {
   "name": "jquery-ajax-request",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "Module that allows you to perform ajax requests in the browser. A wrapper around $.ajax, inspired by superagent.",
   "main": "lib/jquery-ajax-request.js",
   "scripts": {
