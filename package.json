@@ -1,6 +1,6 @@
 {
   "name": "jquery-ajax-request",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "Module that allows you to perform ajax requests in the browser. A wrapper around $.ajax, inspired by superagent.",
   "main": "lib/jquery-ajax-request.js",
   "scripts": {
@@ -34,8 +34,9 @@
   "dependencies": {
     "URIjs": "^1.14.0",
     "jquery": "^2.1.1",
-    "json-stable-stringify": "^1.0.0",
-    "lodash": "^2.4.1"
+    "jsonify": "0.0.0",
+    "lodash": "^2.4.1",
+    "json-stable-stringify": "git://github.com/lucastschmidt/json-stable-stringify"
   },
   "browserify-shim": {
     "jquery": "global:$",

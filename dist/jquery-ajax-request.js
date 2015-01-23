@@ -1,4 +1,4 @@
-!function(e){if("object"==typeof exports&&"undefined"!=typeof module)module.exports=e();else if("function"==typeof define&&define.amd)define([],e);else{var f;"undefined"!=typeof window?f=window:"undefined"!=typeof global?f=global:"undefined"!=typeof self&&(f=self),f.jqueryAjaxRequest=e()}}(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
+(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);throw new Error("Cannot find module '"+o+"'")}var f=n[o]={exports:{}};t[o][0].call(f.exports,function(e){var n=t[o][1][e];return s(n?n:e)},f,f.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 (function (global){
 var $, URI, stableStringify, _,
   __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
@@ -255,13 +255,13 @@ module.exports = function(options) {
   })();
 };
 
-}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
+}).call(this,typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 },{"URIjs":4,"json-stable-stringify":6}],2:[function(require,module,exports){
 /*!
  * URI.js - Mutating URLs
  * IPv6 Support
  *
- * Version: 1.14.0
+ * Version: 1.14.1
  *
  * Author: Rodney Rehm
  * Web: http://medialize.github.io/URI.js/
@@ -451,7 +451,7 @@ module.exports = function(options) {
  * URI.js - Mutating URLs
  * Second Level Domain (SLD) Support
  *
- * Version: 1.14.0
+ * Version: 1.14.1
  *
  * Author: Rodney Rehm
  * Web: http://medialize.github.io/URI.js/
@@ -693,7 +693,7 @@ module.exports = function(options) {
 /*!
  * URI.js - Mutating URLs
  *
- * Version: 1.14.0
+ * Version: 1.14.1
  *
  * Author: Rodney Rehm
  * Web: http://medialize.github.io/URI.js/
@@ -749,7 +749,7 @@ module.exports = function(options) {
     return this;
   }
 
-  URI.version = '1.14.0';
+  URI.version = '1.14.1';
 
   var p = URI.prototype;
   var hasOwn = Object.prototype.hasOwnProperty;
@@ -1219,7 +1219,7 @@ module.exports = function(options) {
       // no "=" is null according to http://dvcs.w3.org/hg/url/raw-file/tip/Overview.html#collect-url-parameters
       value = v.length ? URI.decodeQuery(v.join('='), escapeQuerySpace) : null;
 
-      if (items[name]) {
+      if (hasOwn.call(items, name)) {
         if (typeof items[name] === 'string') {
           items[name] = [items[name]];
         }
@@ -1352,7 +1352,7 @@ module.exports = function(options) {
         value = [value];
       }
 
-      data[name] = data[name].concat(value);
+      data[name] = (data[name] || []).concat(value);
     } else {
       throw new TypeError('URI.addQuery() accepts an object, string as the name parameter');
     }
@@ -1577,9 +1577,8 @@ module.exports = function(options) {
     return this.build(false)._string;
   };
 
-  // generate simple accessors
-  _parts = {protocol: 'protocol', username: 'username', password: 'password', hostname: 'hostname',  port: 'port'};
-  generateAccessor = function(_part){
+
+  function generateSimpleAccessor(_part){
     return function(v, build) {
       if (v === undefined) {
         return this._parts[_part] || '';
@@ -1589,15 +1588,9 @@ module.exports = function(options) {
         return this;
       }
     };
-  };
-
-  for (_part in _parts) {
-    p[_part] = generateAccessor(_parts[_part]);
   }
 
-  // generate accessors with optionally prefixed input
-  _parts = {query: '?', fragment: '#'};
-  generateAccessor = function(_part, _key){
+  function generatePrefixAccessor(_part, _key){
     return function(v, build) {
       if (v === undefined) {
         return this._parts[_part] || '';
@@ -1614,24 +1607,24 @@ module.exports = function(options) {
         return this;
       }
     };
-  };
-
-  for (_part in _parts) {
-    p[_part] = generateAccessor(_part, _parts[_part]);
   }
 
-  // generate accessors with prefixed output
-  _parts = {search: ['?', 'query'], hash: ['#', 'fragment']};
-  generateAccessor = function(_part, _key){
-    return function(v, build) {
-      var t = this[_part](v, build);
-      return typeof t === 'string' && t.length ? (_key + t) : t;
-    };
-  };
+  p.protocol = generateSimpleAccessor('protocol');
+  p.username = generateSimpleAccessor('username');
+  p.password = generateSimpleAccessor('password');
+  p.hostname = generateSimpleAccessor('hostname');
+  p.port = generateSimpleAccessor('port');
+  p.query = generatePrefixAccessor('query', '?');
+  p.fragment = generatePrefixAccessor('fragment', '#');
 
-  for (_part in _parts) {
-    p[_part] = generateAccessor(_parts[_part][1], _parts[_part][0]);
-  }
+  p.search = function(v, build) {
+    var t = this.query(v, build);
+    return typeof t === 'string' && t.length ? ('?' + t) : t;
+  };
+  p.hash = function(v, build) {
+    var t = this.fragment(v, build);
+    return typeof t === 'string' && t.length ? ('#' + t) : t;
+  };
 
   p.pathname = function(v, build) {
     if (v === undefined || v === true) {
@@ -1673,8 +1666,8 @@ module.exports = function(options) {
       href = href.toString();
     }
 
-    if (typeof href === 'string') {
-      this._parts = URI.parse(href, this._parts);
+    if (typeof href === 'string' || href instanceof String) {
+      this._parts = URI.parse(String(href), this._parts);
     } else if (_URI || _object) {
       var src = _URI ? href._parts : href;
       for (key in src) {
@@ -2180,7 +2173,7 @@ module.exports = function(options) {
 
           segments.push(v[i]);
         }
-      } else if (v || (typeof v === 'string')) {
+      } else if (v || typeof v === 'string') {
         if (segments[segments.length -1] === '') {
           // empty trailing elements have to be overwritten
           // to prevent results such as /foo//bar
@@ -2190,7 +2183,7 @@ module.exports = function(options) {
         }
       }
     } else {
-      if (v || (typeof v === 'string' && v.length)) {
+      if (v) {
         segments[segment] = v;
       } else {
         segments.splice(segment, 1);
@@ -2226,7 +2219,7 @@ module.exports = function(options) {
     }
 
     if (!isArray(v)) {
-      v = typeof v === 'string' ? URI.encode(v) : v;
+      v = (typeof v === 'string' || v instanceof String) ? URI.encode(v) : v;
     } else {
       for (i = 0, l = v.length; i < l; i++) {
         v[i] = URI.decode(v[i]);
@@ -2258,14 +2251,14 @@ module.exports = function(options) {
   p.setQuery = function(name, value, build) {
     var data = URI.parseQuery(this._parts.query, this._parts.escapeQuerySpace);
 
-    if (typeof name === 'object') {
+    if (typeof name === 'string' || name instanceof String) {
+      data[name] = value !== undefined ? value : null;
+    } else if (typeof name === 'object') {
       for (var key in name) {
         if (hasOwn.call(name, key)) {
           data[key] = name[key];
         }
       }
-    } else if (typeof name === 'string') {
-      data[name] = value !== undefined ? value : null;
     } else {
       throw new TypeError('URI.addQuery() accepts an object, string as the name parameter');
     }
@@ -3211,7 +3204,7 @@ module.exports = function(options) {
 
 }(this));
 
-}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
+}).call(this,typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 },{}],6:[function(require,module,exports){
 var json = typeof JSON !== 'undefined' ? JSON : require('jsonify');
 
@@ -3265,7 +3258,13 @@ module.exports = function (obj, opts) {
             }
             else seen.push(node);
 
-            var keys = objectKeys(node).sort(cmp && cmp(node));
+            var keys = objectKeys(node);
+            var tmp = cmp && cmp(node);
+            if(tmp){
+                keys = keys.sort(tmp);
+            } else {
+                keys = keys.sort();
+            }
             var out = [];
             for (var i = 0; i < keys.length; i++) {
                 var key = keys[i];
@@ -3732,5 +3731,4 @@ module.exports = function (value, replacer, space) {
     return str('', {'': value});
 };
 
-},{}]},{},[1])(1)
-});
+},{}]},{},[1]);
