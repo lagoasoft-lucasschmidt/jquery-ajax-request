@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/lucastschmidt/jquery-ajax-request"
+    "url": "git://github.com/lagoasoft-lucasschmidt/jquery-ajax-request"
   },
   "keywords": [
     "ajax",
@@ -20,7 +20,7 @@
   "bugs": {
     "url": "https://github.com/lagoasoft-lucasschmidt/jquery-ajax-request/issues"
   },
-  "homepage": "https://github.com/lucastschmidt/jquery-ajax-request",
+  "homepage": "https://github.com/lagoasoft-lucasschmidt/jquery-ajax-request",
   "devDependencies": {
     "browserify": "^4.2.3",
     "browserify-shim": "^3.6.0",
