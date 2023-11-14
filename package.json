@@ -18,7 +18,7 @@
   "author": "Lucas Schmidt",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/lucastschmidt/jquery-ajax-request/issues"
+    "url": "https://github.com/lagoasoft-lucasschmidt/jquery-ajax-request/issues"
   },
   "homepage": "https://github.com/lucastschmidt/jquery-ajax-request",
   "devDependencies": {
@@ -36,7 +36,7 @@
     "jquery": "^2.1.1",
     "jsonify": "0.0.0",
     "lodash": "^2.4.1",
-    "json-stable-stringify": "https://github.com/lucastschmidt/json-stable-stringify"
+    "json-stable-stringify": "https://github.com/lagoasoft-lucasschmidt/json-stable-stringify"
   },
   "browserify-shim": {
     "jquery": "global:$",
